@@ -22,8 +22,10 @@ namespace LivenUserAPI.Services
             return await _addressRepository.GetAllAddressesByUserId(userId);
         }
 
-        public async Task CreateAddress(Address address)
+        public async Task CreateAddress(Address address, int userId)
         {
+            address.UserId = userId;
+
             await _addressRepository.AddNewAddress(address);
         }
 

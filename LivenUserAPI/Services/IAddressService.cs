@@ -6,7 +6,7 @@ namespace LivenUserAPI.Services
     {
         Task<Address> GetAddressById(int id);
         Task<IEnumerable<Address>> GetAllAddressesByUserId(int userId);
-        Task CreateAddress(Address address);
+        Task CreateAddress(Address address, int userId);
         Task UpdateAddress(Address address);
         Task DeleteAddress(int id);
     }
