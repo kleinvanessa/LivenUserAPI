@@ -35,7 +35,7 @@ namespace LivenUserAPI.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAddressById(Address address)
+        public async Task DeleteAddress(Address address)
         {
             _dbContext.Addresses.Remove(address);
             await _dbContext.SaveChangesAsync();

@@ -1,13 +1,13 @@
 ﻿using LivenUserAPI.Domain.Entities;
 
-namespace LivenUserAPI.Repositories
+namespace LivenUserAPI.Services
 {
-    public interface IAddressRepository
+    public interface IAddressService
     {
         Task<Address> GetAddressById(int id);
         Task<IEnumerable<Address>> GetAllAddressesByUserId(int userId);
-        Task AddNewAddress(Address address);
+        Task CreateAddress(Address address);
         Task UpdateAddress(Address address);
-        Task DeleteAddress(Address address);
+        Task DeleteAddress(int id);
     }
 }
