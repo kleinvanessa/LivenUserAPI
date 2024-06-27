@@ -82,13 +82,11 @@ namespace LivenUserAPI.Migrations
 
             modelBuilder.Entity("LivenUserAPI.Domain.Entities.Address", b =>
                 {
-                    b.HasOne("LivenUserAPI.Domain.Entities.User", "User")
+                    b.HasOne("LivenUserAPI.Domain.Entities.User", null)
                         .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("LivenUserAPI.Domain.Entities.User", b =>

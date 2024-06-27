@@ -20,7 +20,7 @@ namespace LivenUserAPI.Repositories
 
         public async Task AddNewUser(User user)
         {
-            await _dbContext.Users.AddAsync(user);
+            _dbContext.Users.Add(user);
             await _dbContext.SaveChangesAsync();
         }
 

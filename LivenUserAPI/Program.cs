@@ -1,4 +1,6 @@
 using LivenUserAPI.Data;
+using LivenUserAPI.Repositories;
+using LivenUserAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace LivenUserAPI
@@ -16,7 +18,15 @@ namespace LivenUserAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            // Configurar o DbContext com SQL Server
+            // Services
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IAddressService, AddressService>();
+
+            // Repositories
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
+            builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+
+            // DbContext with SQL Server
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
