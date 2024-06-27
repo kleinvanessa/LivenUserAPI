@@ -20,8 +20,8 @@ namespace LivenUserAPI.Controllers
             _userService = userService;
         }
 
-        [HttpGet("GetAddressesById/{id}")]
-        public async Task<ActionResult> GetAddressesById(int id)
+        [HttpGet("GetAddressesById")]
+        public async Task<ActionResult> GetAddressesById([FromQuery] int id)
         {
             var address = await _addressService.GetAddressById(id);
 
