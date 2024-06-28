@@ -40,6 +40,12 @@ namespace LivenUserAPI.Repositories
             _dbContext.Addresses.Remove(address);
             await _dbContext.SaveChangesAsync();
         }
-        
+
+        public async Task<bool> VerifyAddressByUserId(int addressId, int userId)
+        {
+            return await _dbContext.Addresses.AnyAsync(a => a.Id == addressId && a.UserId == userId);            
+        }
+
+
     }
 }

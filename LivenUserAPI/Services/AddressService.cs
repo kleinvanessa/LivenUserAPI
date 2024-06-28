@@ -42,5 +42,10 @@ namespace LivenUserAPI.Services
                 await _addressRepository.DeleteAddress(address);            
             }
         }
+
+        public async Task<bool> VerifyAddressByUserId(int addressId, int userId)
+        { 
+            return await _addressRepository.VerifyAddressByUserId(addressId, userId);
+        }
     }
 }

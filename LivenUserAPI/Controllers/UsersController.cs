@@ -14,24 +14,39 @@ namespace LivenUserAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
+        private readonly ILogger<UsersController> _logger;
 
-        public UsersController(IUserService userService)
+        public UsersController(IUserService userService, ILogger<UsersController> logger)
         {
             _userService = userService;
+            _logger = logger;
         }
 
         [Authorize]
-        [HttpGet("GetUserById/{id}")]
-        public async Task<ActionResult<User>> GetUserById(int id)
+        [HttpGet("GetUserData")]
+        public async Task<ActionResult<User>> GetUserData()
         {
-            var user = await _userService.GetUserById(id);
+            var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-            if (user == null)
+            try
             {
-                return NotFound();
-            }
+                var user = await _userService.GetUserById(userId);
 
-            return Ok(user);
+                if (user == null)
+                {
+                    _logger.LogWarning($"User with ID {userId} not found.");
+                    return NotFound(new { Message = "User not found." });
+                }
+
+                var userDto = UserMappings.ToDTO(user);
+
+                return Ok(userDto);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while getting user with ID {userId}.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+            }
         }
 
         [HttpPost("CreateUser")]
@@ -39,33 +54,64 @@ namespace LivenUserAPI.Controllers
         {
             if (userDto == null)
             {
-                return BadRequest();
+                return BadRequest(new { Message = "Invalid user data." });
             }
-            var user = UserMappings.ToDomain(userDto);
 
-            await _userService.CreateUser(user);
+            try
+            {
+                var user = UserMappings.ToDomain(userDto);
+                await _userService.CreateUser(user);
 
-            return Ok();
+                return Ok("User created successfully!");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while creating a new user.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request."});
+            }
         }
 
         [Authorize]
         [HttpPut("UpdateUser")]
-        public async Task<ActionResult> UpdateUser([FromBody] User user)
-        {            
-            await _userService.UpdateUser(user);
-            return Ok();
+        public async Task<ActionResult> UpdateUser([FromBody] UserDTO userDto)
+        {
+            if (userDto == null)
+            {
+                return BadRequest(new { Message = "Invalid user data." });
+            }
+
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                var user = UserMappings.ToDomain(userDto);
+                user.Id = userId;
+
+                await _userService.UpdateUser(user);
+                return Ok("User updated successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"An error occurred while updating user with ID.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+            }
         }
 
         [Authorize]
         [HttpDelete("DeleteUser")]
         public async Task<ActionResult> DeleteUser()
         {
-            // Obter o ID do usuário autenticado
-            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            try
+            {
+                var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+                await _userService.DeleteUser(userId);
 
-            await _userService.DeleteUser(id);
-
-            return Ok();
+                return Ok("User deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An error occurred while deleting the user.");
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+            }
         }
 
     }

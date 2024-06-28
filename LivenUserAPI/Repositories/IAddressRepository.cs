@@ -9,5 +9,6 @@ namespace LivenUserAPI.Repositories
         Task AddNewAddress(Address address);
         Task UpdateAddress(Address address);
         Task DeleteAddress(Address address);
+        Task<bool> VerifyAddressByUserId(int addressId, int userId);
     }
 }

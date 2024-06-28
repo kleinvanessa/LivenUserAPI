@@ -15,5 +15,16 @@ namespace LivenUserAPI.Mappings
                 PostalCode = addressDTO.PostalCode
             };
         }
+
+        public static AddressDTO ToDTO(this Address address)
+        {
+            return new AddressDTO
+            {
+                Street = address.Street,
+                City = address.City,
+                Country = address.Country,
+                PostalCode = address.PostalCode
+            };
+        }
     }
 }

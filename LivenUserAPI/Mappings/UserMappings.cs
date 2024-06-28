@@ -15,5 +15,16 @@ namespace LivenUserAPI.Mappings
                 Addresses = userDTO.Addresses?.Select(a => a.ToDomain()).ToList()
             };
         }
+
+        public static UserDTO ToDTO(this User user) 
+        {
+            return new UserDTO
+            {
+                Name = user.Name,
+                Email = user.Email,
+                Password = user.Password,
+                Addresses = user.Addresses?.Select(a => a.ToDTO()).ToList()
+            };
+        }
     }
 }
