@@ -2,8 +2,10 @@
 using LivenUserAPI.DTOs;
 using LivenUserAPI.Mappings;
 using LivenUserAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace LivenUserAPI.Controllers
 {
@@ -18,6 +20,7 @@ namespace LivenUserAPI.Controllers
             _userService = userService;
         }
 
+        [Authorize]
         [HttpGet("GetUserById/{id}")]
         public async Task<ActionResult<User>> GetUserById(int id)
         {
@@ -45,6 +48,7 @@ namespace LivenUserAPI.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPut("UpdateUser")]
         public async Task<ActionResult> UpdateUser([FromBody] User user)
         {            
@@ -52,10 +56,15 @@ namespace LivenUserAPI.Controllers
             return Ok();
         }
 
-        [HttpDelete("DeleteUser/{id}")]
-        public async Task<ActionResult> DeleteUser(int id)
+        [Authorize]
+        [HttpDelete("DeleteUser")]
+        public async Task<ActionResult> DeleteUser()
         {
+            // Obter o ID do usuário autenticado
+            var id = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
+
             await _userService.DeleteUser(id);
+
             return Ok();
         }
 

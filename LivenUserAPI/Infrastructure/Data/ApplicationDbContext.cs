@@ -1,7 +1,7 @@
 ﻿using LivenUserAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace LivenUserAPI.Data
+namespace LivenUserAPI.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {

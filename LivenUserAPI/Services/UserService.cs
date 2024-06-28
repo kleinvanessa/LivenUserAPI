@@ -1,4 +1,6 @@
 ﻿using LivenUserAPI.Domain.Entities;
+using LivenUserAPI.DTOs;
+using LivenUserAPI.Mappings;
 using LivenUserAPI.Repositories;
 
 namespace LivenUserAPI.Services
@@ -10,6 +12,16 @@ namespace LivenUserAPI.Services
         public UserService(IUserRepository userRepository) 
         {
             _userRepository = userRepository;
+        }
+
+        public async Task<User> AuthenticateUser(LoginDTO loginDTO)
+        {
+            var user = await _userRepository.GetUserByEmailAndPassword(loginDTO.Email, loginDTO.Password);
+
+            if (user == null)
+                return null; 
+
+            return user;
         }
 
         public async Task<User> GetUserById(int id)

@@ -1,5 +1,5 @@
-﻿using LivenUserAPI.Data;
-using LivenUserAPI.Domain.Entities;
+﻿using LivenUserAPI.Domain.Entities;
+using LivenUserAPI.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace LivenUserAPI.Repositories

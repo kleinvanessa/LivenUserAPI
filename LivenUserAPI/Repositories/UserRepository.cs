@@ -1,5 +1,5 @@
-﻿using LivenUserAPI.Data;
-using LivenUserAPI.Domain.Entities;
+﻿using LivenUserAPI.Domain.Entities;
+using LivenUserAPI.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace LivenUserAPI.Repositories
@@ -15,7 +15,9 @@ namespace LivenUserAPI.Repositories
 
         public async Task<User> GetUserById(int id)
         {
-            return await _dbContext.Users.Include(u => u.Addresses).FirstOrDefaultAsync(u => u.Id == id);
+            var user = await _dbContext.Users.Include(u => u.Addresses).FirstOrDefaultAsync(u => u.Id == id);
+
+            return user;
         }
 
         public async Task AddNewUser(User user)
@@ -35,6 +37,12 @@ namespace LivenUserAPI.Repositories
             _dbContext.Users.Remove(user);
             await _dbContext.SaveChangesAsync();
         }
-        
+
+        public async Task<User> GetUserByEmailAndPassword(string email, string password)
+        {
+            var user = await _dbContext.Users.Include(u => u.Addresses).FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+
+            return user;
+        }
     }
 }

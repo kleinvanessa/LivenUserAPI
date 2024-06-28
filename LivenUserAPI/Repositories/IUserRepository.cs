@@ -8,5 +8,6 @@ namespace LivenUserAPI.Repositories
         Task AddNewUser(User user);
         Task UpdateUser(User user);
         Task DeleteUserById(User user);
+        Task<User> GetUserByEmailAndPassword(string email, string password);
     }
 }
