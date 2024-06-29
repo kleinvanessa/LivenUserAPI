@@ -2,8 +2,7 @@
 
 ## Project Description
 
-LivenUserAPI is an ASP.NET Core API designed to manage users and their addresses. 
-
+LivenUserAPI is an ASP.NET Core API designed to manage users and their addresses.
 
 ## Requirements
 
@@ -11,8 +10,7 @@ LivenUserAPI is an ASP.NET Core API designed to manage users and their addresses
 - SQL Server
 - Entity Framework Core
 
-
-- ## Features
+## Features
 
 - JWT Authentication
 - User CRUD
@@ -29,8 +27,9 @@ LivenUserAPI is an ASP.NET Core API designed to manage users and their addresses
     cd LivenUserAPI
     ```
 
-2. **If necessary, Adjust your connection string in `appsettings.json`:**
+2. **If necessary, adjust your connection string in `appsettings.json`:**
 
+  
 
 3. **Install dependencies:**
 
@@ -43,17 +42,6 @@ LivenUserAPI is an ASP.NET Core API designed to manage users and their addresses
     ```bash
     dotnet ef database update
     ```
-
-        +-------------------+                +-----------------+
-  |      User         |                |     Address     |
-  +-------------------+                +-----------------+
-  | Id (PK)           |<-------------->| Id (PK)         |
-  | Name              |  1    N        | Street          |
-  | Email             |                | City            |
-  | Password          |                | Country         |
-  |                   |                | PostalCode      | 
-  +-------------------+                | UserId (FK)     |
-                                       +-----------------+
 
 5. **Run the application:**
 
@@ -71,11 +59,32 @@ LivenUserAPI is an ASP.NET Core API designed to manage users and their addresses
     dotnet test
     ```
 
+## Database Schema
+
+```markdown
++-------------------+                +-----------------+
+|      User         |                |     Address     |
++-------------------+                +-----------------+
+| Id (PK)           |<-------------->| Id (PK)         |
+| Name              |  1    N        | Street          |
+| Email             |                | City            |
+| Password          |                | Country         |
+|                   |                | PostalCode      | 
++-------------------+                | UserId (FK)     |
+                                     +-----------------+
+```
+
 ## Project Architecture
+
+### Architecture Overview
+
+The LivenUserAPI project uses a layered architecture. 
+This design pattern separates concerns into distinct layers, each with specific responsibilities, 
+to promote a modular, maintainable, and scalable application
 
 ### Folder Structure
 
-
+```markdown
 /LivenUserAPI
 │
 ├── /Controllers
@@ -119,10 +128,14 @@ LivenUserAPI is an ASP.NET Core API designed to manage users and their addresses
 │   ├── UserDTO.cs
 │   ├── LoginDTO.cs
 │
+├── /LivenUserAPITests
+│
 ├── /Properties
 │   ├── launchSettings.json
 │
 ├── appsettings.json
 └── Program.cs
 
-├── /LivenUserAPITests
+```
+
+### Developed by Vanessa Klein
