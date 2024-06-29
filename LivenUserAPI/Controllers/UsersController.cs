@@ -24,7 +24,7 @@ namespace LivenUserAPI.Controllers
 
         [Authorize]
         [HttpGet("GetUserData")]
-        public async Task<ActionResult<User>> GetUserData()
+        public async Task<ActionResult> GetUserData()
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
@@ -34,8 +34,7 @@ namespace LivenUserAPI.Controllers
 
                 if (user == null)
                 {
-                    _logger.LogWarning($"User with ID {userId} not found.");
-                    return NotFound(new { Message = "User not found." });
+                    return NotFound("User not found.");
                 }
 
                 var userDto = UserMappings.ToDTO(user);
@@ -45,7 +44,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while getting user with ID {userId}.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+                return BadRequest("An error occurred while processing your request.");
             }
         }
 
@@ -54,7 +53,7 @@ namespace LivenUserAPI.Controllers
         {
             if (userDto == null)
             {
-                return BadRequest(new { Message = "Invalid user data." });
+                return BadRequest( "Invalid user data.");
             }
 
             try
@@ -67,7 +66,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while creating a new user.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request."});
+                return BadRequest("An error occurred while processing your request.");
             }
         }
 
@@ -77,7 +76,7 @@ namespace LivenUserAPI.Controllers
         {
             if (userDto == null)
             {
-                return BadRequest(new { Message = "Invalid user data." });
+                return BadRequest("Invalid user data.");
             }
 
             try
@@ -92,7 +91,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while updating user with ID.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+                return BadRequest("An error occurred while processing your request.");
             }
         }
 
@@ -110,7 +109,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while deleting the user.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+                return BadRequest("An error occurred while processing your request.");
             }
         }
 
