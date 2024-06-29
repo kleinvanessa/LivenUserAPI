@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivenUserAPI", "LivenUserAPI\LivenUserAPI.csproj", "{FF5D1C5F-8DFB-4C42-9C73-E2384C8C6210}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivenUserAPI.Tests", "LivenUserAPI.Tests\LivenUserAPI.Tests.csproj", "{F66FC192-0CED-45E5-AC4D-4A811E5B64DC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF5D1C5F-8DFB-4C42-9C73-E2384C8C6210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF5D1C5F-8DFB-4C42-9C73-E2384C8C6210}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF5D1C5F-8DFB-4C42-9C73-E2384C8C6210}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF5D1C5F-8DFB-4C42-9C73-E2384C8C6210}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F66FC192-0CED-45E5-AC4D-4A811E5B64DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F66FC192-0CED-45E5-AC4D-4A811E5B64DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F66FC192-0CED-45E5-AC4D-4A811E5B64DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F66FC192-0CED-45E5-AC4D-4A811E5B64DC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {437AA01D-4FD1-418C-B2A0-B269B3958F41}
+	EndGlobalSection
+EndGlobal
