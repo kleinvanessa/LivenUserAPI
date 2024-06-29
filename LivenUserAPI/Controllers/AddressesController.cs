@@ -49,7 +49,7 @@ namespace LivenUserAPI.Controllers
 
                 if (addressDto == null || user == null)
                 {
-                    return BadRequest(new { Message = "Invalid address data or user not found." });
+                    return BadRequest("Invalid address data or user not found.");
                 }
 
                 var address = AddressMappings.ToDomain(addressDto);
@@ -60,7 +60,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while creating a new address.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+                return BadRequest("An error occurred while processing your request.");
             }
         }
 
@@ -75,7 +75,7 @@ namespace LivenUserAPI.Controllers
 
                 if (user == null)
                 {
-                    return NotFound(new { Message = "User not found." });
+                    return NotFound("User not found.");
                 }
 
                 var allAddressesByUser = await _addressService.GetAllAddressesByUserId(userId);
@@ -85,7 +85,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while getting all addresses for user ID {userId}.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+                return BadRequest("An error occurred while processing your request.");
             }
         }
         
@@ -100,7 +100,7 @@ namespace LivenUserAPI.Controllers
 
                 if (!existingAddress)
                 {
-                    return NotFound(new { Message = $"Address with ID {addressId} not found for current user." });
+                    return NotFound($"Address with ID {addressId} not found for current user.");
                 }
 
                 var address = AddressMappings.ToDomain(addressDTO);
@@ -113,7 +113,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while updating address with ID {addressId}.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+                return BadRequest("An error occurred while processing your request.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace LivenUserAPI.Controllers
 
                 if (address == null || address.UserId != userId)
                 {
-                    return BadRequest(new { Message = "Address not found or does not belong to the user." });
+                    return BadRequest("Address not found or does not belong to the user.");
                 }
 
                 await _addressService.DeleteAddress(addressId);
@@ -137,7 +137,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"An error occurred while deleting address with ID {addressId}.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+                return BadRequest("An error occurred while processing your request.");
             }
         }
     }
