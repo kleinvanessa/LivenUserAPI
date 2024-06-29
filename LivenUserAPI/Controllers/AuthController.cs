@@ -27,7 +27,7 @@ namespace LivenUserAPI.Controllers
             if (loginDTO == null)
             {
                 _logger.LogWarning("Login attempt with null data.");
-                return BadRequest(new { Message = "Login data is null." });
+                return BadRequest("Login data is null.");
             }
 
             try
@@ -37,7 +37,7 @@ namespace LivenUserAPI.Controllers
                 if (user == null)
                 {
                     _logger.LogWarning($"Invalid login attempt for email: {loginDTO.Email}");
-                    return Unauthorized(new { Message = "Invalid username or password." });
+                    return Unauthorized("Invalid username or password.");
                 }
 
                 var token = _jwtTokenService.GenerateToken(user);
@@ -51,7 +51,7 @@ namespace LivenUserAPI.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred during the login process.");
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
+                return BadRequest("An error occurred while processing your request.");
             }
         }
     }
