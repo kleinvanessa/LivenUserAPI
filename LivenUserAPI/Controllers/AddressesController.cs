@@ -23,20 +23,7 @@ namespace LivenUserAPI.Controllers
             _addressService = addressService;
             _userService = userService;
             _logger = logger;
-        }
-
-        [HttpGet("GetAddressesById")]
-        public async Task<ActionResult> GetAddressesById([FromQuery] int id)
-        {
-            var address = await _addressService.GetAddressById(id);
-
-            if (address == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(address);
-        }
+        }        
 
         [HttpPost("CreateAddress")]
         public async Task<ActionResult> CreateAddress(AddressDTO addressDto)
