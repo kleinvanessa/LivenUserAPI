@@ -108,7 +108,7 @@ namespace LivenUserAPI.Controllers
                 address.Id = addressId;
 
                 await _addressService.UpdateAddress(address);
-                return Ok();
+                return Ok("Address updated successfully");
             }
             catch (Exception ex)
             {
@@ -117,26 +117,26 @@ namespace LivenUserAPI.Controllers
             }
         }
 
-        [HttpDelete("DeleteAddress/{id}")]
-        public async Task<ActionResult> DeleteAddress(int id)
+        [HttpDelete("DeleteAddress/{addressId}")]
+        public async Task<ActionResult> DeleteAddress(int addressId)
         {
             var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
             try
             {
-                var address = await _addressService.GetAddressById(id);
+                var address = await _addressService.GetAddressById(addressId);
 
                 if (address == null || address.UserId != userId)
                 {
                     return BadRequest(new { Message = "Address not found or does not belong to the user." });
                 }
 
-                await _addressService.DeleteAddress(id);
-                return NoContent();
+                await _addressService.DeleteAddress(addressId);
+                return Ok("Address deleted successfully");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"An error occurred while deleting address with ID {id}.");
+                _logger.LogError(ex, $"An error occurred while deleting address with ID {addressId}.");
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An error occurred while processing your request." });
             }
         }
